@@ -20,6 +20,6 @@ The docker-compose.yml is set to load anything from the 'data' folder. This fold
 Username: admin
 Password: ABcd1234
 
-However, if you opt for the persistent mysql database (check docker-compose.yml), create the database structure with `php bin/console doctrine:migrations:migrate`, afterwads you can load the User via `php bin/console doctrine:fixtures:load` (careful, this will purge the database).
+However, if you opt for the persistent mysql database (check docker-compose.yml), create the database structure with `php bin/console doctrine:migrations:migrate`, afterwards you can load the User via `php bin/console doctrine:fixtures:load` (careful, this will purge the database).
 
 To be continued...
