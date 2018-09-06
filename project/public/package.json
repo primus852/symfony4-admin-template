@@ -23,6 +23,7 @@
     "noty": "^3.2.0-beta",
     "perfect-scrollbar": "^1.4.0",
     "popper.js": "^1.14.4",
+    "tooltipster": "^4.2.6",
     "x0popup": "^0.3.3"
   }
 }
