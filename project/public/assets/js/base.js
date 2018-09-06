@@ -164,3 +164,18 @@ function openNoty(type, text) {
         buttons: false
     }).show();
 }
+
+/* Toggle Treview */
+$(document).on('click', '.toggleTree', function (e) {
+    e.preventDefault();
+
+    var $items = $(this).next('.treeMenu');
+    var $icon = $(this).children('i');
+    if ($items.is(':visible')) {
+        $icon.removeClass('fa-chevron-down').addClass('fa-chevron-right');
+    } else {
+        $icon.removeClass('fa-chevron-right').addClass('fa-chevron-down');
+    }
+    $items.toggle(200);
+
+});
