@@ -1,0 +1,38 @@
+<html>
+<head>
+    <link type="text/css" rel="stylesheet" href="{{ asset('node_modules/bootstrap/dist/css/bootstrap.min.css') }}">
+    <link type="text/css" rel="stylesheet" href="{{ asset('assets/css/login.min.css') }}">
+</head>
+<body id="LoginForm">
+<div class="container">
+    <h1 class="form-heading">Title</h1>
+    <div class="login-form">
+        <div class="main-div">
+            <div class="panel">
+                <h2>Login</h2>
+                <p>
+                    {% if error %}
+                        <span class="error">{{ error.messageKey }}</span>
+                    {% else %}
+                        Please enter your username and password
+                    {% endif %}
+                </p>
+            </div>
+            <form action="{{ path('login') }}" method="post" id="Login">
+                <div class="form-group">
+                    <input type="text" class="form-control" name="_username" value="{{ last_username }}" placeholder="Username"/>
+                </div>
+                <div class="form-group">
+                    <input type="password" class="form-control" name="_password" placeholder="Password"/>
+                </div>
+                <button type="submit" class="btn btn-primary">Login</button>
+            </form>
+        </div>
+        <p class="botto-text"> &copy; {{ 'now'|date('Y') }}</p>
+    </div>
+</div>
+
+</body>
+<script type="text/javascript" src="{{ asset('node_modules/bootstrap/dist/js/bootstrap.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('node_modules/jquery/dist/jquery.min.js') }}"></script>
+</html>

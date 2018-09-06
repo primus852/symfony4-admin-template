@@ -1,0 +1,47 @@
+version: '3'
+
+services:
+    httpd:
+      build: .
+      ports:
+        - 127.0.0.1:80:80
+      restart: always
+      networks:
+        - default
+      tmpfs:
+        - /var/www/html/var/cache:exec,mode=777
+        - /var/www/html/var/log:exec,mode=777
+      volumes:
+        - ./project:/var/www/html
+        - ./apache/000-default.conf:/etc/apache2/sites-available/000-default.conf
+        - ./logs/apache:/var/log/apache2
+    mysql:
+      image: mysql:5.7
+      environment:
+        MYSQL_DATABASE: project
+        MYSQL_USER: admin
+        MYSQL_PASSWORD: ABcd1234
+        MYSQL_ROOT_PASSWORD: docker
+      ports:
+        - 127.0.0.1:3306:3306
+      networks:
+        - default
+      volumes:
+        - ./logs/mysql:/var/log/mysql
+        # Put .sql / .sql.gz to this folder to create new db every time
+        - ./data:/docker-entrypoint-initdb.d
+        # or use persistent Database
+        # - ./mysql:/var/lib/mysql
+    phpmyadmin:
+      image: phpmyadmin/phpmyadmin
+      ports:
+        - 127.0.0.1:8181:80
+      networks:
+        - default
+      environment:
+        PMA_USER: root
+        PMA_PASSWORD: docker
+        PMA_HOST: mysql
+
+networks:
+    default:
