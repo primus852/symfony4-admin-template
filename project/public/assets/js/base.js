@@ -1,5 +1,5 @@
 /* Global Vars */
-var $version = '1.10.1';
+var $version = '0.0.1';
 var cols = {},
     messageIsOpen = false;
 
@@ -165,17 +165,50 @@ function openNoty(type, text) {
     }).show();
 }
 
-/* Toggle Treview */
-$(document).on('click', '.toggleTree', function (e) {
+function loadDetails(trigger, id) {
+
+    /* DIV */
+    var $message = $('#' + id);
+    $message.html('<i class="fa fa-spin fa-spinner fa-4x"></i>');
+
+    /* Ajax Call */
+    $.post(trigger.attr('data-url')).done(function (data) {
+        $message.html(data);
+        var sHash = window.location.hash.split('load-');
+        if (sHash.length) {
+            $('[data-device="' + sHash[1] + '"]').trigger('click');
+        }
+
+        $('#menuToggle > input').trigger('click');
+        initOverlays();
+        initTooltips('.tt');
+    });
+}
+
+/* Click on any Listitem */
+$(document).on('click', '.clickable', function (e) {
+
     e.preventDefault();
+    window.location.hash = $(this).attr('data-hash');
 
-    var $items = $(this).next('.treeMenu');
-    var $icon = $(this).children('i');
-    if ($items.is(':visible')) {
-        $icon.removeClass('fa-chevron-down').addClass('fa-chevron-right');
+    var $uId = Math.floor((Math.random() * 10000) + 1);
+
+    $('body').append('<div class="messageFly" id="' + $uId + '"></div>');
+
+    var $message = $('#' + $uId);
+    $message.show();
+
+    loadDetails($(this), $uId);
+
+    if (messageIsOpen) {
+        if (!$(this).hasClass('innerMessage')) {
+            cols.hideMessage();
+        }
+        setTimeout(function () {
+            cols.showMessage();
+        }, 300);
     } else {
-        $icon.removeClass('fa-chevron-right').addClass('fa-chevron-down');
+        cols.showMessage();
     }
-    $items.toggle(200);
-
+    cols.showOverlay();
 });
